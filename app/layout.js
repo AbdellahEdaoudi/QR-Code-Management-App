@@ -5,6 +5,7 @@ import { MyProvider } from "./Context/Mycontext";
 import Footer from "./Pages/Footer";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { Analytics } from "@vercel/analytics/react"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
         {children}
         <Footer />
         <ToastContainer />
+        <Analytics /> 
         </MyProvider>
       </body>
     </html>
