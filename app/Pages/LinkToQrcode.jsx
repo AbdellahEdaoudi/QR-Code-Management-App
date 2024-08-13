@@ -2,6 +2,9 @@
 import { useState, useRef } from 'react';
 import QRCode from 'qrcode.react';
 
+
+
+
 export default function LinkToQrcode() {
   const [url, setUrl] = useState('');
   const [filename, setFilename] = useState('');
@@ -69,7 +72,7 @@ export default function LinkToQrcode() {
       <div className="flex md:flex-row flex-col bg-white p-4 rounded-lg border px-6 md:px-16 border-gray-200 shadow-md py-16">
         {/* nav Inputs and Logos */}
         <nav className="md:w-1/2">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Generate QR Code</h1>
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Link To  QRCode</h1>
           <div className="mb-4">
             <input
               type="url"

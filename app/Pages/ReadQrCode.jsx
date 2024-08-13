@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import jsQR from 'jsqr';
 import { Copy } from 'lucide-react';
 import { toast } from 'react-toastify';
+
+
+
 export default function ReadQrCode() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [qrCodeData, setQrCodeData] = useState('');
