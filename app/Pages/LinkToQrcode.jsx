@@ -14,19 +14,19 @@ export default function LinkToQrcode() {
   const fileInputRef = useRef(null); // Ref for the file input
 
   const icons = [
-    { src: '/icons/fb.svg', alt: 'Facebook' },
-    { src: '/icons/github.svg', alt: 'GitHub' },
-    { src: '/icons/ins.svg', alt: 'Instagram' },
-    { src: '/icons/link.svg', alt: 'Link' },
-    { src: '/icons/messenger.svg', alt: 'Messenger' },
-    { src: '/icons/reddit.svg', alt: 'Reddit' },
-    { src: '/icons/snap.svg', alt: 'Snapchat' },
-    { src: '/icons/tele.svg', alt: 'Telegram' },
-    { src: '/icons/tik.svg', alt: 'TikTok' },
-    { src: '/icons/twit.svg', alt: 'Twitter' },
-    { src: '/icons/twitch.svg', alt: 'Twitch' },
-    { src: '/icons/wts.svg', alt: 'WhatsApp' },
-    { src: '/icons/yt.svg', alt: 'YouTube' },
+    { src: '/Icons/fb.svg', alt: 'Facebook' },
+    { src: '/Icons/github.svg', alt: 'GitHub' },
+    { src: '/Icons/ins.svg', alt: 'Instagram' },
+    { src: '/Icons/link.svg', alt: 'Link' },
+    { src: '/Icons/messenger.svg', alt: 'Messenger' },
+    { src: '/Icons/reddit.svg', alt: 'Reddit' },
+    { src: '/Icons/snap.svg', alt: 'Snapchat' },
+    { src: '/Icons/tele.svg', alt: 'Telegram' },
+    { src: '/Icons/tik.svg', alt: 'TikTok' },
+    { src: '/Icons/twit.svg', alt: 'Twitter' },
+    { src: '/Icons/twitch.svg', alt: 'Twitch' },
+    { src: '/Icons/wts.svg', alt: 'WhatsApp' },
+    { src: '/Icons/yt.svg', alt: 'YouTube' },
   ];
 
   const handleLogoUpload = (event) => {
