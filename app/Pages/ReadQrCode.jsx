@@ -55,7 +55,7 @@ const copyToClipboard = async () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
+    <div className=" bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
       <div className="flex md:flex-row flex-col bg-white p-6 rounded-lg border border-gray-200 shadow-md">
         {/* Section for Upload and Image Preview */}
         <nav className="md:w-1/2 mb-4 md:mb-0">

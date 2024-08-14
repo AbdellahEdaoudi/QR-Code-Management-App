@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <MyProvider>
-        <div className='sticky top-0 bg-white  shadow-md'>
+        <div className='sticky top-0 z-50 bg-white  shadow-md'>
         <Header />
       </div>
         {children}

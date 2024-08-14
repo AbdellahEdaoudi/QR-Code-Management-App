@@ -68,8 +68,8 @@ export default function LinkToQrcode() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
-      <div className="flex md:flex-row flex-col bg-white p-4 rounded-lg border px-6 md:px-16 border-gray-200 shadow-md py-16">
+    <div className="bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
+      <div className="flex md:flex-row  flex-col bg-white p-4 rounded-lg border px-6 md:px-16 border-gray-200 shadow-md py-16">
         {/* nav Inputs and Logos */}
         <nav className="md:w-1/2">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Link To  QRCode</h1>

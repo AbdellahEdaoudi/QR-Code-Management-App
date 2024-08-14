@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserMultiFormatReader } from '@zxing/library';
 import { toast } from 'react-toastify';
-import { SwitchCamera } from 'lucide-react';
 
 export default function ScanQrCode() {
   const [scanResult, setScanResult] = useState('');
@@ -70,18 +69,16 @@ export default function ScanQrCode() {
           <div className="flex justify-center">
             <video
               id="video"
-              width="90%"
-              style={{ transform: 'scaleX(-1)' }}
+              width="100%"
+              style={{ transform: 'scaleX(-1)' }} // عكس الفيديو أفقيًا
             />
           </div>
-          <div className='flex justify-center'>
           <button 
             onClick={switchCamera} 
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
           >
-            <SwitchCamera />
+            Switch Camera
           </button>
-          </div>
         </nav>
         {/* Section for Displaying QR Code Data */}
         <nav className="md:w-1/2 flex flex-col items-center justify-center">
