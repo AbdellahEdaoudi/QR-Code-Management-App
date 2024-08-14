@@ -4,19 +4,19 @@ import React from 'react'
 
 function Footer() {
   const icons = [
-      { link: "https://www.linkedin.com/in/abdellah-edaoudi-0bbba02a5/", src: '/icons/link.svg', alt: 'Linkedin' },
-      { link: "https://www.instagram.com/edaoudi_abdellah", src: '/icons/ins.svg', alt: 'Instagram' },
-      { link: "https://www.youtube.com/@edaoudidev", src: '/icons/yt.svg', alt: 'YouTube' },
-      { link: "https://github.com/AbdellahEdaoudi", src: '/icons/github.svg', alt: 'GitHub' },
-    { link: "", src: '/icons/fb.svg', alt: 'Facebook' },
-    { link: "", src: '/icons/messenger.svg', alt: 'Messenger' },
-    { link: "", src: '/icons/reddit.svg', alt: 'Reddit' },
-    { link: "", src: '/icons/snap.svg', alt: 'Snapchat' },
-    { link: "", src: '/icons/tele.svg', alt: 'Telegram' },
-    { link: "", src: '/icons/tik.svg', alt: 'TikTok' },
-    { link: "", src: '/icons/twit.svg', alt: 'Twitter' },
-    { link: "", src: '/icons/twitch.svg', alt: 'Twitch' },
-    { link: "", src: '/icons/wts.svg', alt: 'WhatsApp' },
+      { link: "https://www.linkedin.com/in/abdellah-edaoudi-0bbba02a5/", src: '/Icons/link.svg', alt: 'Linkedin' },
+      { link: "https://www.instagram.com/edaoudi_abdellah", src: '/Icons/ins.svg', alt: 'Instagram' },
+      { link: "https://www.youtube.com/@edaoudidev", src: '/Icons/yt.svg', alt: 'YouTube' },
+      { link: "https://github.com/AbdellahEdaoudi", src: '/Icons/github.svg', alt: 'GitHub' },
+    { link: "", src: '/Icons/fb.svg', alt: 'Facebook' },
+    { link: "", src: '/Icons/messenger.svg', alt: 'Messenger' },
+    { link: "", src: '/Icons/reddit.svg', alt: 'Reddit' },
+    { link: "", src: '/Icons/snap.svg', alt: 'Snapchat' },
+    { link: "", src: '/Icons/tele.svg', alt: 'Telegram' },
+    { link: "", src: '/Icons/tik.svg', alt: 'TikTok' },
+    { link: "", src: '/Icons/twit.svg', alt: 'Twitter' },
+    { link: "", src: '/Icons/twitch.svg', alt: 'Twitch' },
+    { link: "", src: '/Icons/wts.svg', alt: 'WhatsApp' },
   ];
 
   return (
