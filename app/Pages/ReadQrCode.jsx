@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import jsQR from 'jsqr';
 import { Copy } from 'lucide-react';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 
 
@@ -87,7 +88,7 @@ const copyToClipboard = async () => {
             <div className="bg-gray-200 p-6 rounded-lg text-center shadow-md w-full">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">QR Code Data:</h2>
               <p className="text-indigo-600 break-words flex items-center justify-between">
-                {qrCodeData}
+                <Link href={qrCodeData}>{qrCodeData}</Link>
                 <span
                   className='text-gray-600 cursor-pointer hover'
                   onClick={copyToClipboard}
