@@ -57,7 +57,7 @@ const copyToClipboard = async () => {
 
   return (
     <div className=" bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
-      <div className="flex md:flex-row flex-col bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+      <div className="flex md:flex-row flex-col bg-white p-6 pb-36 rounded-lg border border-gray-200 shadow-md">
         {/* Section for Upload and Image Preview */}
         <nav className="md:w-1/2 mb-4 md:mb-0">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Read QR Code</h1>
@@ -88,9 +88,10 @@ const copyToClipboard = async () => {
             <div className="bg-gray-200 p-6 rounded-lg text-center shadow-md w-full">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">QR Code Data:</h2>
               <p className="text-indigo-600 break-words flex items-center justify-between">
-                <Link href={qrCodeData}>{qrCodeData}</Link>
+                <Link href={qrCodeData === "No QR code found" ? "" : qrCodeData} target="_blank" 
+                className='hover:underline hover:scale-105 duration-300'>{qrCodeData}</Link>
                 <span
-                  className='text-gray-600 cursor-pointer hover'
+                  className='text-gray-600 cursor-pointer  hover:scale-105 duration-300 hover:text-green-500'
                   onClick={copyToClipboard}
                 >
                   <Copy />

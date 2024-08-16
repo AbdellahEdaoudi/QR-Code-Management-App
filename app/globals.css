@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    zoom: 97%;
+}

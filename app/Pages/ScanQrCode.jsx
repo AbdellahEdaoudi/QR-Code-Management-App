@@ -64,7 +64,7 @@ export default function ScanQrCode() {
 
   return (
     <div className="bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
-      <div className="flex md:flex-row flex-col md:space-x-10 bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+      <div className="flex md:flex-row pb-24 flex-col md:space-x-10 bg-white p-6 rounded-lg border border-gray-200 shadow-md">
         <nav className="md:w-1/2 mb-4 md:mb-0">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Scan QR Code</h1>
           <div className="flex justify-center">
