@@ -1,17 +1,25 @@
 "use client";
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import QRCode from 'qrcode.react';
-
-
+import { MyContext } from '../Context/Mycontext';
 
 
 export default function LinkToQrcode() {
+  const { t, language } = useContext(MyContext);
   const [url, setUrl] = useState('');
   const [filename, setFilename] = useState('');
   const [logo, setLogo] = useState('');
-  const [logoFile, setLogoFile] = useState(null); // New state for uploaded logo
+  const [logoFile, setLogoFile] = useState(null);
   const qrCodeRef = useRef(null);
-  const fileInputRef = useRef(null); // Ref for the file input
+  const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    document.title = `${t('home.title')} | EdQrCode`;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.content = t('home.desc');
+    }
+  }, [language, t]);
 
   const icons = [
     { src: '/Icons/fb.svg', alt: 'Facebook' },
@@ -57,13 +65,13 @@ export default function LinkToQrcode() {
           const file = new File([blob], `${filename || 'qrcode'}.png`, { type: 'image/png' });
           navigator.share({
             files: [file],
-            title: 'QR Code',
-            text: 'Check out this QR Code!',
+            title: t('generator.qrCodeTitle'),
+            text: t('generator.qrCodeShareText'),
           }).catch((error) => console.error('Sharing failed', error));
         });
       }
     } else {
-      alert("Your browser doesn't support the Web Share API.");
+      alert(t('generator.shareApiNotSupported'));
     }
   };
 
@@ -72,11 +80,11 @@ export default function LinkToQrcode() {
       <div className="flex md:flex-row  flex-col bg-white p-4 rounded-lg border px-6 md:px-16 border-gray-200 shadow-md py-16">
         {/* nav Inputs and Logos */}
         <section className="md:w-1/2">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Link To  QRCode</h1>
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">{t('generator.title')}</h1>
           <div className="mb-4">
             <input
               type="url"
-              placeholder="Enter URL"
+              placeholder={t('generator.enterUrl')}
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -85,19 +93,19 @@ export default function LinkToQrcode() {
           <div className="mb-4">
             <input
               type="text"
-              placeholder="Filename"
+              placeholder={t('generator.filename')}
               value={filename}
               onChange={(e) => setFilename(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
           <div className="mb-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">Upload or Choose a Logo</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-3">{t('generator.uploadOrChoose')}</h2>
             <button
               onClick={() => fileInputRef.current.click()}
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-purple-600 text-white hover:bg-purple-700 transition-colors duration-300"
             >
-              Upload Logo
+              {t('generator.uploadLogo')}
             </button>
             <input
               type="file"
@@ -173,13 +181,13 @@ export default function LinkToQrcode() {
               onClick={GenerateQRCode}
               className="w-72 py-3 px-6 mb-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors duration-300"
             >
-              Download QR Code
+              {t('generator.download')}
             </button>
             <button
               onClick={shareQRCode}
               className="w-72 py-3 px-6 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-300"
             >
-              Share QR Code
+              {t('generator.share')}
             </button>
           </div>
         </section>

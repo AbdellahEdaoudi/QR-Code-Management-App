@@ -1,18 +1,20 @@
 export default function sitemap() {
-    const baseUrl = 'https://edqrcode.vercel.app'; // Replace with your actual domain
+    const baseUrl = 'https://edqrcode.vercel.app';
+    const languages = ['en', 'fr', 'ar', 'es', 'de', 'ru', 'pt', 'ja', 'hi', 'zh'];
+    const routes = ['', '/ScanQrCode', '/ReadQrCode'];
 
-    return [
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 1,
-        },
-        {
-            url: `${baseUrl}/ScanQrCode`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
-    ];
+    const sitemapEntries = [];
+
+    languages.forEach((lang) => {
+        routes.forEach((route) => {
+            sitemapEntries.push({
+                url: `${baseUrl}/${lang}${route}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: route === '' ? 1 : 0.8,
+            });
+        });
+    });
+
+    return sitemapEntries;
 }

@@ -4,10 +4,10 @@ import React from 'react'
 
 function Footer() {
   const icons = [
-      { link: "https://www.linkedin.com/in/abdellah-edaoudi", src: '/Icons/link.svg', alt: 'Linkedin' },
-      { link: "https://www.instagram.com/edaoudi_abdellah", src: '/Icons/ins.svg', alt: 'Instagram' },
-      { link: "", src: '/Icons/yt.svg', alt: 'YouTube' },
-      { link: "https://github.com/AbdellahEdaoudi", src: '/Icons/github.svg', alt: 'GitHub' },
+    { link: "https://www.linkedin.com/in/abdellah-edaoudi", src: '/Icons/link.svg', alt: 'Linkedin' },
+    { link: "https://www.instagram.com/edaoudi_abdellah", src: '/Icons/ins.svg', alt: 'Instagram' },
+    { link: "", src: '/Icons/yt.svg', alt: 'YouTube' },
+    { link: "https://github.com/AbdellahEdaoudi", src: '/Icons/github.svg', alt: 'GitHub' },
     { link: "", src: '/Icons/fb.svg', alt: 'Facebook' },
     { link: "", src: '/Icons/messenger.svg', alt: 'Messenger' },
     { link: "", src: '/Icons/reddit.svg', alt: 'Reddit' },
@@ -17,13 +17,14 @@ function Footer() {
     { link: "", src: '/Icons/twit.svg', alt: 'Twitter' },
     { link: "", src: '/Icons/twitch.svg', alt: 'Twitch' },
     { link: "", src: '/Icons/wts.svg', alt: 'WhatsApp' },
+    { link: "https://paypal.me/edaoudiabdellah", src: '/Icons/paypal.png', alt: 'PayPal' },
   ];
 
   return (
     <footer className="bg-white pt-2 pb-8 ">
       <div className="flex md:flex-row md:justify-around flex-col items-center">
         <div>
-        <Image src="/Logo/ed_Qrcode_img.png" width={200} height={100} alt="Logo" />
+          <Image src="/Logo/ed_Qrcode_img.png" width={200} height={100} alt="Logo" />
         </div>
         <div className="flex flex-wrap justify-center  gap-4">
           {icons.map((icon, i) => (
