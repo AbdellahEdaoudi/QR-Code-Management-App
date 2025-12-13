@@ -1,4 +1,4 @@
-import ScanQrCode from '../Pages/ReadQrCode'
+import ReadQrCode from '../Pages/ReadQrCode';
 
 export const metadata = {
   title: "Read QR Code | QR Code Scanner",
@@ -11,7 +11,7 @@ export const metadata = {
 function page() {
   return (
     <div>
-      <ScanQrCode />
+      <ReadQrCode />
     </div>
   )
 }

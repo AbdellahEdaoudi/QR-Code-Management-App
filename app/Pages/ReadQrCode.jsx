@@ -42,24 +42,24 @@ export default function ReadQrCode() {
   };
 
 
-const copyToClipboard = async () => {
-  if (qrCodeData) {
-    try {
-      await navigator.clipboard.writeText(qrCodeData);
-      toast.success('Copied successfully!');
-    } catch (err) {
-      toast.error('Failed to copy text!');
-      console.error('Failed to copy text: ', err);
+  const copyToClipboard = async () => {
+    if (qrCodeData) {
+      try {
+        await navigator.clipboard.writeText(qrCodeData);
+        toast.success('Copied successfully!');
+      } catch (err) {
+        toast.error('Failed to copy text!');
+        console.error('Failed to copy text: ', err);
+      }
     }
-  }
-};
+  };
 
 
   return (
     <div className=" bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
       <div className="flex md:flex-row flex-col bg-white p-6 pb-36 rounded-lg border border-gray-200 shadow-md">
         {/* Section for Upload and Image Preview */}
-        <nav className="md:w-1/2 mb-4 md:mb-0">
+        <section className="md:w-1/2 mb-4 md:mb-0">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Read QR Code</h1>
           <div className='flex justify-center'>
             <label htmlFor="file-upload" className=" w-72 text-center bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg cursor-pointer hover:bg-purple-700 transition-colors duration-300">
@@ -81,15 +81,20 @@ const copyToClipboard = async () => {
               className="w-48 h-48 object-cover rounded-md shadow-lg"
             />
           </div>
-        </nav>
+        </section>
         {/* Section for Displaying QR Code Data */}
-        <nav className="md:w-1/2 flex flex-col items-center justify-center">
+        <section className="md:w-1/2 flex flex-col items-center justify-center">
           {qrCodeData && (
             <div className="bg-gray-200 p-6 rounded-lg text-center shadow-md w-full">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">QR Code Data:</h2>
               <p className="text-indigo-600 break-words flex items-center justify-between">
-                <Link href={qrCodeData === "No QR code found" ? "" : qrCodeData} target="_blank" 
-                className='hover:underline hover:scale-105 duration-300'>{qrCodeData}</Link>
+                {qrCodeData.startsWith('http') ? (
+                  <Link href={qrCodeData} target="_blank" rel="noopener noreferrer" className='hover:underline hover:scale-105 duration-300'>
+                    {qrCodeData}
+                  </Link>
+                ) : (
+                  <span className='text-gray-800'>{qrCodeData}</span>
+                )}
                 <span
                   className='text-gray-600 cursor-pointer  hover:scale-105 duration-300 hover:text-green-500'
                   onClick={copyToClipboard}
@@ -99,7 +104,7 @@ const copyToClipboard = async () => {
               </p>
             </div>
           )}
-        </nav>
+        </section>
       </div>
     </div>
   );

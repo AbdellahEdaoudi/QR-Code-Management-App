@@ -4,9 +4,9 @@ import React from 'react'
 
 function Footer() {
   const icons = [
-      { link: "https://www.linkedin.com/in/abdellah-edaoudi-0bbba02a5/", src: '/Icons/link.svg', alt: 'Linkedin' },
+      { link: "https://www.linkedin.com/in/abdellah-edaoudi", src: '/Icons/link.svg', alt: 'Linkedin' },
       { link: "https://www.instagram.com/edaoudi_abdellah", src: '/Icons/ins.svg', alt: 'Instagram' },
-      { link: "https://www.youtube.com/@edaoudidev", src: '/Icons/yt.svg', alt: 'YouTube' },
+      { link: "", src: '/Icons/yt.svg', alt: 'YouTube' },
       { link: "https://github.com/AbdellahEdaoudi", src: '/Icons/github.svg', alt: 'GitHub' },
     { link: "", src: '/Icons/fb.svg', alt: 'Facebook' },
     { link: "", src: '/Icons/messenger.svg', alt: 'Messenger' },

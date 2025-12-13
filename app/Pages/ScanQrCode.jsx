@@ -65,7 +65,7 @@ export default function ScanQrCode() {
   return (
     <div className="bg-gradient-to-r from-indigo-200 via-purple-300 to-pink-200 py-4 px-6 md:px-16">
       <div className="flex md:flex-row pb-24 flex-col md:space-x-10 bg-white p-6 rounded-lg border border-gray-200 shadow-md">
-        <nav className="md:w-1/2 mb-4 md:mb-0">
+        <section className="md:w-1/2 mb-4 md:mb-0">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Scan QR Code</h1>
           <div className="flex justify-center">
             <video
@@ -75,25 +75,25 @@ export default function ScanQrCode() {
             />
           </div>
           <div className='flex justify-center'>
-          <button 
-            onClick={switchCamera} 
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-          >
-            <SwitchCamera />
-          </button>
+            <button
+              onClick={switchCamera}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            >
+              <SwitchCamera />
+            </button>
           </div>
-        </nav>
+        </section>
         {/* Section for Displaying QR Code Data */}
-        <nav className="md:w-1/2 flex flex-col items-center justify-center">
+        <section className="md:w-1/2 flex flex-col items-center justify-center">
           <div className="bg-gray-200 p-6 rounded-lg text-center shadow-md w-full">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">QR Code Data:</h2>
             <p className="text-indigo-600 break-words">{scanResult}</p>
             <p className="text-red-600 break-words">
-              {error} 
+              {error}
               {/* {attemptCount > 0 && ` - Attempt #${attemptCount}`} */}
             </p>
           </div>
-        </nav>
+        </section>
       </div>
     </div>
   );
