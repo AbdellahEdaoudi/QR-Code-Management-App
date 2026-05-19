@@ -27,7 +27,10 @@ export default function ScanQrCode() {
         const devices = await codeReaderRef.current.listVideoInputDevices();
         setVideoDevices(devices);
         if (devices.length > 0) {
-          setSelectedDeviceId(devices[0].deviceId);
+          const backCamera = devices.find(device => 
+            /back|rear|environment/i.test(device.label)
+          );
+          setSelectedDeviceId(backCamera ? backCamera.deviceId : devices[devices.length - 1].deviceId);
         }
       } catch (error) {
         console.error('Error listing video input devices:', error);
@@ -175,7 +178,7 @@ export default function ScanQrCode() {
             <video
               ref={videoRef}
               className={`w-[90%] rounded-lg shadow-sm transition-opacity duration-300 ${isVideoLoading ? 'opacity-0' : 'opacity-100'}`}
-              style={{ transform: 'scaleX(-1)' }}
+              style={{ transform: videoDevices.find(d => d.deviceId === selectedDeviceId)?.label.match(/front|user/i) ? 'scaleX(-1)' : 'none' }}
               onCanPlay={() => setIsVideoLoading(false)}
             />
           </div>

@@ -3,8 +3,7 @@ import "./globals.css";
 import Header from "./Pages/Header";
 import { MyProvider } from "./Context/Mycontext";
 import Footer from "./Pages/Footer";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import { ToastProvider } from './components/toast';
 import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,15 +24,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MyProvider>
-          <div className='sticky top-0 z-50 bg-white  shadow-md'>
-            <Header />
-          </div>
-          {children}
-          <Footer />
-          <ToastContainer />
-          <Analytics />
-        </MyProvider>
+        <ToastProvider>
+          <MyProvider>
+            <div className='sticky top-0 z-50 bg-white  shadow-md'>
+              <Header />
+            </div>
+            {children}
+            <Footer />
+            <Analytics />
+          </MyProvider>
+        </ToastProvider>
       </body>
     </html>
   );

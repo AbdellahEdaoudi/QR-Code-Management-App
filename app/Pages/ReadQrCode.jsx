@@ -2,12 +2,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import jsQR from 'jsqr';
 import { Copy, Check } from 'lucide-react';
-import { toast } from 'react-toastify';
+import { useToast } from '../components/toast';
 import Link from 'next/link';
 import { MyContext } from '../Context/Mycontext';
 
 export default function ReadQrCode() {
   const { t, language } = useContext(MyContext);
+  const toast = useToast();
   const [selectedImage, setSelectedImage] = useState(null);
   const [qrCodeData, setQrCodeData] = useState('');
   const [isCopied, setIsCopied] = useState(false);
