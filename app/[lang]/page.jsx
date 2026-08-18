@@ -1,12 +1,12 @@
 import React from 'react';
 import LinkToQrcode from '../Pages/LinkToQrcode';
-
-import { metaData } from '../i18n/meta-data';
+import { getMetaData } from '../translations/metadata/index';
 
 // Dynamic Metadata
 export async function generateMetadata({ params }) {
-    const lang = params.lang || 'en';
-    const meta = metaData[lang] || metaData['en'];
+    const resolvedParams = await params;
+    const lang = resolvedParams?.lang || 'en';
+    const meta = await getMetaData(lang);
 
     return {
         title: meta.home?.title || "Generate and Customize QR Codes",
@@ -28,22 +28,24 @@ export async function generateMetadata({ params }) {
                 'es': '/es',
                 'de': '/de',
                 'ru': '/ru',
-                'pt': '/pt',
-                'ja': '/ja',
-                'hi': '/hi',
-                'zh': '/zh',
                 'ar': '/ar',
             },
         },
     };
 }
 
-export default function Page({ params }) {
+import { getTranslation } from '../translations/content/index';
+
+export default async function Page({ params }) {
+    const resolvedParams = await params;
+    const lang = resolvedParams?.lang || 'en';
+    const content = await getTranslation(lang);
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
         'name': 'EdQrCode',
-        'url': `https://edqrcode.vercel.app/${params.lang}`,
+        'url': `https://edqrcode.vercel.app/${lang}`,
         'description': 'Generate high-quality, fully customizable QR codes for free with EdQrCode.',
         'applicationCategory': 'UtilityApplication',
         'operatingSystem': 'Any',
@@ -61,7 +63,7 @@ export default function Page({ params }) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <LinkToQrcode locale={params.lang} />
+            <LinkToQrcode lang={lang} content={content.generator} home={content.home} />
         </div>
     );
 }

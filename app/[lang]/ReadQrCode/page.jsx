@@ -1,12 +1,12 @@
 import React from 'react';
 import ReadQrCodeComponent from '../../Pages/ReadQrCode';
-
-import { metaData } from '../../i18n/meta-data';
+import { getMetaData } from '../../translations/metadata/index';
 
 // Dynamic Metadata
 export async function generateMetadata({ params }) {
-    const lang = params.lang || 'en';
-    const meta = metaData[lang] || metaData['en'];
+    const resolvedParams = await params;
+    const lang = resolvedParams?.lang || 'en';
+    const meta = await getMetaData(lang);
 
     return {
         title: meta.read?.title || "Read QR Code",
@@ -28,20 +28,22 @@ export async function generateMetadata({ params }) {
                 'es': '/es/ReadQrCode',
                 'de': '/de/ReadQrCode',
                 'ru': '/ru/ReadQrCode',
-                'pt': '/pt/ReadQrCode',
-                'ja': '/ja/ReadQrCode',
-                'hi': '/hi/ReadQrCode',
-                'zh': '/zh/ReadQrCode',
                 'ar': '/ar/ReadQrCode',
             },
         },
     };
 }
 
-export default function Page({ params }) {
+import { getTranslation } from '../../translations/content/index';
+
+export default async function Page({ params }) {
+    const resolvedParams = await params;
+    const lang = resolvedParams?.lang || 'en';
+    const content = await getTranslation(lang);
+
     return (
         <div>
-            <ReadQrCodeComponent locale={params.lang} />
+            <ReadQrCodeComponent lang={lang} content={content.readQr} />
         </div>
     );
 }

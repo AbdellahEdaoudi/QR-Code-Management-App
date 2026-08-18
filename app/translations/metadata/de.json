@@ -1,0 +1,36 @@
+{
+  "home": {
+    "title": "Bester kostenloser QR-Code-Generator | QR-Codes mit Logo erstellen",
+    "description": "Erstellen Sie kostenlos hochwertige, vollständig anpassbare QR-Codes. Fügen Sie Logos, Farben und Rahmen hinzu. Laden Sie in hoher Auflösung herunter (PNG, SVG). Keine Anmeldung erforderlich.",
+    "keywords": [
+      "QR-Code-Generator",
+      "Kostenloser QR-Code",
+      "Benutzerdefinierter QR-Code",
+      "QR-Code mit Logo",
+      "QR-Code erstellen",
+      "Hochauflösender QR"
+    ]
+  },
+  "scan": {
+    "title": "Kostenloser Online-QR-Code-Scanner | Mit Kamera scannen",
+    "description": "Scannen und decodieren Sie QR-Codes sofort online mit Ihrer Webcam oder Handykamera. Schnell, sicher und unterstützt alle QR-Formate ohne App-Installation.",
+    "keywords": [
+      "QR-Code scannen",
+      "Online-QR-Scanner",
+      "Webcam-QR-Leser",
+      "Kostenloser QR-Scanner",
+      "Barcode scannen"
+    ]
+  },
+  "read": {
+    "title": "QR-Code aus Bild lesen | Daten online extrahieren",
+    "description": "Laden Sie ein beliebiges Bild mit einem QR-Code hoch, um die Daten sofort zu extrahieren. Unterstützt PNG, JPG und andere Formate. Einfacher und schneller QR-Decoder.",
+    "keywords": [
+      "QR aus Bild lesen",
+      "QR-Code decodieren",
+      "Bild zu Text",
+      "QR-Daten extrahieren",
+      "QR-Code-Leser"
+    ]
+  }
+}

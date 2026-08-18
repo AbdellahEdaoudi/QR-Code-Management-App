@@ -1,0 +1,36 @@
+{
+  "home": {
+    "title": "Best Free QR Code Generator | Create Custom QR Codes with Logo",
+    "description": "Generate high-quality, fully customizable QR codes for free. Add logos, colors, and frames. Download in high resolution (PNG, SVG). No sign-up required.",
+    "keywords": [
+      "QR Code Generator",
+      "Free QR Code",
+      "Custom QR Code",
+      "QR Code with Logo",
+      "Create QR Code",
+      "High Resolution QR"
+    ]
+  },
+  "scan": {
+    "title": "Free Online QR Code Scanner | Scan from Camera",
+    "description": "Instantly scan and decode QR codes online using your webcam or mobile camera. Fast, secure, and supports all QR formats without installing apps.",
+    "keywords": [
+      "Scan QR Code",
+      "Online QR Scanner",
+      "Webcam QR Reader",
+      "Free QR Scanner",
+      "Scan Barcode"
+    ]
+  },
+  "read": {
+    "title": "Read QR Code from Image | Extract Data Online",
+    "description": "Upload any image containing a QR code to extract its data instantly. Supports PNG, JPG, and other formats. Simple and fast QR decoder.",
+    "keywords": [
+      "Read QR from Image",
+      "Decode QR Code",
+      "Image to Text",
+      "Extract QR Data",
+      "QR Code Reader"
+    ]
+  }
+}

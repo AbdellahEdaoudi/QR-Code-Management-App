@@ -1,6 +1,6 @@
 export default function sitemap() {
     const baseUrl = 'https://edqrcode.vercel.app';
-    const languages = ['en', 'fr', 'ar', 'es', 'de', 'ru', 'pt', 'ja', 'hi', 'zh'];
+    const languages = ['en', 'fr', 'ar', 'es', 'de', 'ru'];
     const routes = ['', '/ScanQrCode', '/ReadQrCode'];
 
     const sitemapEntries = [];

@@ -58,7 +58,7 @@ export function ToastProvider({ children }) {
     return (
         <ToastContext.Provider value={toast}>
             {children}
-            <div className="fixed top-6 right-6 z-[100] flex flex-col items-end gap-3 pointer-events-none">
+            <div className="fixed top-6 right-6 z-100 flex flex-col items-end gap-3 pointer-events-none">
                 <AnimatePresence mode="popLayout" initial={false}>
                     {toasts.map((t, index) => (
                         <motion.div
@@ -111,7 +111,7 @@ export function ToastProvider({ children }) {
                                     </button>
 
                                     {/* Subtle Accent Line */}
-                                    <div className={`absolute left-0 top-0 bottom-0 w-[2px] ${t.type === 'success' ? 'bg-emerald-500' :
+                                    <div className={`absolute left-0 top-0 bottom-0 w-0.5 ${t.type === 'success' ? 'bg-emerald-500' :
                                         t.type === 'error' ? 'bg-rose-500' :
                                             t.type === 'warning' ? 'bg-amber-500' :
                                                 'bg-blue-500'

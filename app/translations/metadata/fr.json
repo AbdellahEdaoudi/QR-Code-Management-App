@@ -1,0 +1,36 @@
+{
+  "home": {
+    "title": "Meilleur générateur de code QR gratuit | Créer des QR codes avec logo",
+    "description": "Générez gratuitement des codes QR de haute qualité et entièrement personnalisables. Ajoutez des logos, des couleurs et des cadres. Téléchargez en haute résolution (PNG, SVG). Aucune inscription requise.",
+    "keywords": [
+      "Générateur de code QR",
+      "Code QR gratuit",
+      "Code QR personnalisé",
+      "Code QR avec logo",
+      "Créer un code QR",
+      "QR Haute Résolution"
+    ]
+  },
+  "scan": {
+    "title": "Scanner de code QR en ligne gratuit | Scanner avec la caméra",
+    "description": "Scannez et décodez instantanément les codes QR en ligne à l'aide de votre webcam ou appareil photo mobile. Rapide, sécurisé et prend en charge tous les formats QR sans installer d'applications.",
+    "keywords": [
+      "Scanner un code QR",
+      "Scanner QR en ligne",
+      "Lecteur QR webcam",
+      "Scanner QR gratuit",
+      "Scanner code-barres"
+    ]
+  },
+  "read": {
+    "title": "Lire le code QR à partir d'une image | Extraire les données en ligne",
+    "description": "Téléchargez n'importe quelle image contenant un code QR pour extraire ses données instantanément. Prend en charge PNG, JPG et d'autres formats. Décodeur QR simple et rapide.",
+    "keywords": [
+      "Lire QR à partir d'une image",
+      "Décoder un code QR",
+      "Image en texte",
+      "Extraire données QR",
+      "Lecteur de code QR"
+    ]
+  }
+}

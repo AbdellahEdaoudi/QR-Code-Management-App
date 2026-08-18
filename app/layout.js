@@ -1,39 +1,87 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "./Pages/Header";
-import { MyProvider } from "./Context/Mycontext";
-import Footer from "./Pages/Footer";
-import { ToastProvider } from './components/toast';
-import { Analytics } from "@vercel/analytics/react"
+
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   metadataBase: new URL('https://edqrcode.vercel.app'),
   title: {
-    default: "Edqrcode | Generate and Customize QR Codes",
-    template: "%s | Edqrcode",
+    default: "EdQrCode | Modern QR Code Studio & Scanner",
+    template: "%s | EdQrCode",
   },
-  description: "Edqrcode lets you create high-quality, customizable QR codes effortlessly. Download QR codes in various sizes.",
+  description: "Create, customize, read, and scan high-resolution QR codes effortlessly. Free, lightning fast, with logo embedding and vector export.",
+  keywords: [
+    "QR Code Generator",
+    "QR Code Scanner",
+    "Free QR Code",
+    "Custom QR Code",
+    "QR Code with Logo",
+    "Read QR from Image",
+    "Decode QR Code",
+    "High Resolution QR"
+  ],
+  authors: [{ name: "EdQrCode Studio" }],
+  creator: "EdQrCode Studio",
+  publisher: "EdQrCode Studio",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   icons: {
     icon: '/Qrcode/favicon.png',
+    apple: '/Qrcode/favicon.png',
+  },
+  openGraph: {
+    title: "EdQrCode | Modern QR Code Studio & Scanner",
+    description: "Create, customize, read, and scan high-resolution QR codes effortlessly. Free, lightning fast, with logo embedding and vector export.",
+    url: 'https://edqrcode.vercel.app',
+    siteName: 'EdQrCode',
+    images: [
+      {
+        url: '/Qrcode/favicon.png',
+        width: 800,
+        height: 600,
+        alt: 'EdQrCode Studio - Create and Scan QR Codes',
+      }
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'EdQrCode | Modern QR Code Studio & Scanner',
+    description: 'Create, customize, read, and scan high-resolution QR codes effortlessly. Free, lightning fast, with logo embedding.',
+    images: ['/Qrcode/favicon.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ToastProvider>
-          <MyProvider>
-            <div className='sticky top-0 z-50 bg-white  shadow-md'>
-              <Header />
-            </div>
+      <body className={`${inter.className} bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-purple-500 selection:text-white relative`}>
+        {/* Background Ambient Glows */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute -top-40 left-1/4 w-150 h-150 bg-purple-600/15 rounded-full blur-[140px] animate-pulse-glow" />
+          <div className="absolute top-1/3 -right-20 w-125 h-125 bg-indigo-600/15 rounded-full blur-[130px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute -bottom-20 left-1/3 w-137.5 h-137.5 bg-cyan-600/10 rounded-full blur-[150px]" />
+        </div>
+
             {children}
-            <Footer />
             <Analytics />
-          </MyProvider>
-        </ToastProvider>
       </body>
     </html>
   );

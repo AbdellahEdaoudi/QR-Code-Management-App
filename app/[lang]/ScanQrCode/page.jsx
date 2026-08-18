@@ -1,12 +1,12 @@
 import React from 'react';
 import ScanQrCodeComponent from '../../Pages/ScanQrCode';
-
-import { metaData } from '../../i18n/meta-data';
+import { getMetaData } from '../../translations/metadata/index';
 
 // Dynamic Metadata
 export async function generateMetadata({ params }) {
-    const lang = params.lang || 'en';
-    const meta = metaData[lang] || metaData['en'];
+    const resolvedParams = await params;
+    const lang = resolvedParams?.lang || 'en';
+    const meta = await getMetaData(lang);
 
     return {
         title: meta.scan?.title || "Scan QR Code",
@@ -28,20 +28,22 @@ export async function generateMetadata({ params }) {
                 'es': '/es/ScanQrCode',
                 'de': '/de/ScanQrCode',
                 'ru': '/ru/ScanQrCode',
-                'pt': '/pt/ScanQrCode',
-                'ja': '/ja/ScanQrCode',
-                'hi': '/hi/ScanQrCode',
-                'zh': '/zh/ScanQrCode',
                 'ar': '/ar/ScanQrCode',
             },
         },
     };
 }
 
-export default function Page({ params }) {
+import { getTranslation } from '../../translations/content/index';
+
+export default async function Page({ params }) {
+    const resolvedParams = await params;
+    const lang = resolvedParams?.lang || 'en';
+    const content = await getTranslation(lang);
+
     return (
         <div>
-            <ScanQrCodeComponent locale={params.lang} />
+            <ScanQrCodeComponent lang={lang} content={content.scanQr} />
         </div>
     );
 }

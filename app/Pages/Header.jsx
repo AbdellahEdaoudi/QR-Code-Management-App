@@ -1,30 +1,20 @@
 "use client";
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import React, { useContext, useEffect } from 'react';
-import { useRouter, usePathname, useParams } from 'next/navigation';
-import { MyContext } from '../Context/Mycontext';
+import { useRouter, usePathname } from 'next/navigation';
+import { QrCode, Scan, FileSearch, Globe, Menu, X, Sparkles } from 'lucide-react';
+import CustomSelect from '../components/CustomSelect';
 
-function Header() {
-  const { t, language, changeLanguage } = useContext(MyContext);
+function Header({ content, lang }) {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
-  const currentLang = params.lang || 'en';
+  const currentLang = lang || 'en';
+  
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    if (params.lang && params.lang !== language) {
-      changeLanguage(params.lang);
-    }
-  }, [params.lang]);
 
-  const handleLanguageChange = (e) => {
-    const newLang = e.target.value;
-    changeLanguage(newLang);
-
-    // Replace language segment in URL
+  const handleLanguageChange = (newLang) => {
     const segments = pathname.split('/');
-    // segments[0] is "" (leading slash), segments[1] is lang
     if (segments.length > 1) {
       segments[1] = newLang;
       const newPath = segments.join('/');
@@ -34,58 +24,154 @@ function Header() {
     }
   };
 
+  const getFlag = (countryCode) => (
+    <img src={`https://flagcdn.com/w20/${countryCode}.png`} srcSet={`https://flagcdn.com/w40/${countryCode}.png 2x`} width="20" alt="flag" className="rounded-sm" />
+  );
+
   const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'fr', name: 'Français' },
-    { code: 'ar', name: 'Arabic' },
-    { code: 'es', name: 'Español' },
-    { code: 'de', name: 'Deutsch' },
-    { code: 'ru', name: 'Русский' },
-    { code: 'pt', name: 'Português' },
-    { code: 'ja', name: '日本語' },
-    { code: 'hi', name: 'हिन्दी' },
-    { code: 'zh', name: '中文' },
+    { code: 'en', name: 'English', flag: getFlag('gb') },
+    { code: 'ar', name: 'العربية', flag: getFlag('sa') },
+    { code: 'fr', name: 'Français', flag: getFlag('fr') },
+    { code: 'es', name: 'Español', flag: getFlag('es') },
+    { code: 'de', name: 'Deutsch', flag: getFlag('de') },
+    { code: 'ru', name: 'Русский', flag: getFlag('ru') },
   ];
 
-  return (
-    <header className='bg-white shadow-lg md:py-0 sm:py-1 py-3'>
-      <div className='container mx-auto flex flex-wrap items-center justify-between px-4 md:px-0'>
-        {/* Logo Section */}
-        <Link href={`/${currentLang}`} className='flex items-center p-2'>
-          <Image
-            src={"/Logo/ed_Qrcode_img.png"}
-            alt="Logo"
-            className='hover:scale-105 duration-300'
-            width={150}
-            height={50}
-          />
-        </Link>
+  const isGenerateActive = pathname === `/${currentLang}` || pathname === `/${currentLang}/`;
+  const isReadActive = pathname.includes('/ReadQrCode');
+  const isScanActive = pathname.includes('/ScanQrCode');
 
-        {/* Right Section: Nav Links + Language Switcher */}
-        <div className='flex items-center gap-4'>
-          {/* Navigation Links */}
-          <nav className='flex items-center gap-2'>
-            <Link href={`/${currentLang}/ReadQrCode`} className='text-white bg-lime-500 py-2 px-2 md:px-4 text-sm md:text-base rounded-md hover:bg-lime-400 transition duration-300 whitespace-nowrap'>
-              {t('header.readQr')}
+  return (
+    <header className="w-full backdrop-blur-xl bg-slate-900/80 border-b border-slate-800/80 sticky top-0 z-50 transition-all">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-18">
+          {/* Logo Section */}
+          <Link
+            href={`/`}
+            className="flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
+          >
+            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-tr from-purple-600 to-indigo-500 shadow-lg shadow-purple-500/25 p-2 border border-purple-400/30 group-hover:shadow-purple-500/40 transition-shadow">
+              <QrCode className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-purple-300 transition-colors">
+                  EdQr<span className="text-purple-400">Code</span>
+                </span>
+                <span className="px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  PRO
+                </span>
+              </div>
+              <span className="text-[11px] text-slate-400 font-medium hidden sm:inline">
+                {content?.qrStudio || 'QR Studio & Scanner'}
+              </span>
+            </div>
+          </Link>
+
+          {/* Center Navigation Links (Desktop) */}
+          <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-slate-800/60 border border-slate-700/60 backdrop-blur-md">
+            <Link
+              href={`/${currentLang}`}
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${isGenerateActive
+                  ? 'bg-linear-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                }`}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>{content?.generateQr || 'Generate QR'}</span>
             </Link>
-            <Link href={`/${currentLang}/ScanQrCode`} className='text-white bg-emerald-500 py-2 px-2 md:px-4 text-sm md:text-base rounded-md hover:bg-emerald-400 transition duration-300 whitespace-nowrap'>
-              {t('header.scanQr')}
+
+            <Link
+              href={`/${currentLang}/ReadQrCode`}
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${isReadActive
+                  ? 'bg-linear-to-r from-cyan-600 to-blue-600 text-white shadow-md shadow-cyan-600/30'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                }`}
+            >
+              <FileSearch className="w-4 h-4" />
+              <span>{content?.readQr || 'Read QR'}</span>
+            </Link>
+
+            <Link
+              href={`/${currentLang}/ScanQrCode`}
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${isScanActive
+                  ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/30'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                }`}
+            >
+              <Scan className="w-4 h-4" />
+              <span>{content?.scanQr || 'Scan QR'}</span>
             </Link>
           </nav>
 
-          {/* Language Switcher */}
-          <select
-            value={currentLang}
-            onChange={handleLanguageChange}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2 outline-none cursor-pointer"
-          >
-            {languages.map((lang) => (
-              <option key={lang.code} value={lang.code}>
-                {lang.name}
-              </option>
-            ))}
-          </select>
+          {/* Right Section: Language Switcher & Mobile Toggle */}
+          <div className="flex items-center gap-3">
+            {/* Language Selector */}
+            <div className="relative flex items-center">
+              <CustomSelect
+                value={currentLang}
+                onChange={handleLanguageChange}
+                options={languages.map(lang => ({
+                  value: lang.code,
+                  label: lang.name,
+                  flag: lang.flag
+                }))}
+                icon={Globe}
+                buttonClassName="border-slate-700/80"
+              />
+            </div>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700 transition"
+              aria-label="Toggle Menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Navigation Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 px-2 space-y-2 border-t border-slate-800/80 animate-in fade-in slide-in-from-top-2 duration-200">
+            <Link
+              href={`/${currentLang}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition ${isGenerateActive
+                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
+                  : 'text-slate-300 hover:bg-slate-800/80'
+                }`}
+            >
+              <Sparkles className="w-5 h-5" />
+              <span>{content?.generateQr || 'Generate QR'}</span>
+            </Link>
+
+            <Link
+              href={`/${currentLang}/ReadQrCode`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition ${isReadActive
+                  ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30'
+                  : 'text-slate-300 hover:bg-slate-800/80'
+                }`}
+            >
+              <FileSearch className="w-5 h-5" />
+              <span>{content?.readQr || 'Read QR'}</span>
+            </Link>
+
+            <Link
+              href={`/${currentLang}/ScanQrCode`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition ${isScanActive
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
+                  : 'text-slate-300 hover:bg-slate-800/80'
+                }`}
+            >
+              <Scan className="w-5 h-5" />
+              <span>{content?.scanQr || 'Scan QR'}</span>
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );
