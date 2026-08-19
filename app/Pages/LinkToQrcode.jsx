@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from 'react';
-import QRCode from 'qrcode.react';
+import { QRCodeCanvas } from 'qrcode.react';
 import { useToast } from '../components/toast';
 import {
   Link2,
@@ -15,7 +15,6 @@ import {
   Copy,
   Upload,
   Sparkles,
-  Palette,
   Image as ImageIcon,
   Check,
   Zap,
@@ -62,7 +61,7 @@ export default function LinkToQrcode({ lang, content, home }) {
   const [fgColor, setFgColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#ffffff');
   const [errorLevel, setErrorLevel] = useState('H');
-  const [includeMargin, setIncludeMargin] = useState(false);
+  const [includeMargin, setIncludeMargin] = useState(true);
   const [logo, setLogo] = useState('');
   const [logoFile, setLogoFile] = useState(null);
   const [logoSize, setLogoSize] = useState(50);
@@ -114,24 +113,8 @@ export default function LinkToQrcode({ lang, content, home }) {
     { src: '/Icons/link.svg', alt: 'Link', name: 'Link' },
   ];
 
-  const presetFgColors = [
-    { label: 'Black', color: '#000000' },
-    { label: 'Indigo', color: '#4f46e5' },
-    { label: 'Purple', color: '#9333ea' },
-    { label: 'Emerald', color: '#059669' },
-    { label: 'Rose', color: '#e11d48' },
-    { label: 'Blue', color: '#2563eb' },
-    { label: 'Amber', color: '#d97706' },
-    { label: 'Slate', color: '#1e293b' },
-  ];
 
-  const presetBgColors = [
-    { label: 'White', color: '#ffffff' },
-    { label: 'Slate 50', color: '#f8fafc' },
-    { label: 'Amber 50', color: '#fffbeb' },
-    { label: 'Sky 50', color: '#f0f9ff' },
-    { label: 'Zinc 900', color: '#18181b' },
-  ];
+
 
   const handleLogoUpload = (event) => {
     const file = event.target.files[0];
@@ -159,13 +142,17 @@ export default function LinkToQrcode({ lang, content, home }) {
         return;
       }
 
-      // Create a high-resolution export canvas
+      // Create a high-resolution export canvas with guaranteed background
       const exportCanvas = document.createElement('canvas');
       exportCanvas.width = downloadResolution;
       exportCanvas.height = downloadResolution;
       const ctx = exportCanvas.getContext('2d');
 
-      // Draw with smoothing enabled
+      // Draw background color first
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, downloadResolution, downloadResolution);
+
+      // Draw QR canvas on top
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(canvas, 0, 0, downloadResolution, downloadResolution);
 
@@ -529,80 +516,9 @@ export default function LinkToQrcode({ lang, content, home }) {
           {/* Customization Options Accordion / Box */}
           <div className="glass-panel p-6 rounded-3xl border border-slate-800 shadow-xl space-y-6">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Palette className="w-5 h-5 text-purple-400" />
-              {content?.designColors || 'Design & Colors'}
+              <Sparkles className="w-5 h-5 text-purple-400" />
+              {content?.uploadOrChoose || 'Logo & Customization'}
             </h2>
-
-            {/* Colors Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {/* Foreground Color */}
-              <div className="space-y-2.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  {content?.patternColor || 'QR Pattern Color'}
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="color"
-                    value={fgColor}
-                    onChange={(e) => setFgColor(e.target.value)}
-                    className="w-10 h-10 rounded-xl border border-slate-700 cursor-pointer bg-transparent"
-                  />
-                  <input
-                    type="text"
-                    value={fgColor}
-                    onChange={(e) => setFgColor(e.target.value)}
-                    className="w-28 p-2 bg-slate-900 border border-slate-700 rounded-xl text-xs font-mono text-slate-200 uppercase"
-                  />
-                </div>
-                {/* Presets */}
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {presetFgColors.map((c) => (
-                    <button
-                      key={c.color}
-                      onClick={() => setFgColor(c.color)}
-                      style={{ backgroundColor: c.color }}
-                      title={c.label}
-                      className={`w-6 h-6 rounded-full border transition-transform ${fgColor === c.color ? 'scale-125 border-white ring-2 ring-purple-500' : 'border-slate-700 hover:scale-110'
-                        }`}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Background Color */}
-              <div className="space-y-2.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  {content?.bgColor || 'Background Color'}
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="color"
-                    value={bgColor}
-                    onChange={(e) => setBgColor(e.target.value)}
-                    className="w-10 h-10 rounded-xl border border-slate-700 cursor-pointer bg-transparent"
-                  />
-                  <input
-                    type="text"
-                    value={bgColor}
-                    onChange={(e) => setBgColor(e.target.value)}
-                    className="w-28 p-2 bg-slate-900 border border-slate-700 rounded-xl text-xs font-mono text-slate-200 uppercase"
-                  />
-                </div>
-                {/* Presets */}
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {presetBgColors.map((c) => (
-                    <button
-                      key={c.color}
-                      onClick={() => setBgColor(c.color)}
-                      style={{ backgroundColor: c.color }}
-                      title={c.label}
-                      className={`w-6 h-6 rounded-full border transition-transform ${bgColor === c.color ? 'scale-125 border-white ring-2 ring-purple-500' : 'border-slate-700 hover:scale-110'
-                        }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
 
             {/* Logo Section */}
             <div className="pt-4 border-t border-slate-800 space-y-4">
@@ -750,15 +666,13 @@ export default function LinkToQrcode({ lang, content, home }) {
             <div className="flex flex-col items-center justify-center py-4">
               <div
                 ref={qrCanvasRef}
-                className="p-6 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-slate-700/50 relative group"
-                style={{ backgroundColor: bgColor }}
+                className="p-6 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-slate-700/50 relative group bg-white"
               >
-                <QRCode
+                <QRCodeCanvas
                   value={currentQrValue || 'https://edqrcode.vercel.app'}
                   size={240}
-                  bgColor={bgColor}
-                  fgColor={fgColor}
-                  renderAs="canvas"
+                  bgColor="#ffffff"
+                  fgColor="#000000"
                   includeMargin={includeMargin}
                   level={errorLevel}
                   imageSettings={
