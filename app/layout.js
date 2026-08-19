@@ -2,8 +2,24 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// Inline script to prevent FOUC (flash of unstyled content) on theme load
+const themeInitScript = `
+  (function() {
+    try {
+      var theme = localStorage.getItem('edqr-theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.classList.add(theme);
+    } catch(e) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+`;
 
 export const metadata = {
   metadataBase: new URL('https://edqrcode.vercel.app'),
@@ -71,17 +87,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-purple-500 selection:text-white relative`}>
-        {/* Background Ambient Glows */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute -top-40 left-1/4 w-150 h-150 bg-purple-600/15 rounded-full blur-[140px] animate-pulse-glow" />
-          <div className="absolute top-1/3 -right-20 w-125 h-125 bg-indigo-600/15 rounded-full blur-[130px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
-          <div className="absolute -bottom-20 left-1/3 w-137.5 h-137.5 bg-cyan-600/10 rounded-full blur-[150px]" />
-        </div>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className={`${inter.className} min-h-screen flex flex-col antialiased relative`}>
+        <ThemeProvider>
+          {/* Background Ambient Glows */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 ambient-glow">
+            <div className="absolute -top-40 left-1/4 w-150 h-150 bg-purple-600/15 rounded-full blur-[140px] animate-pulse-glow" />
+            <div className="absolute top-1/3 -right-20 w-125 h-125 bg-indigo-600/15 rounded-full blur-[130px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+            <div className="absolute -bottom-20 left-1/3 w-137.5 h-137.5 bg-cyan-600/10 rounded-full blur-[150px]" />
+          </div>
 
-            {children}
-            <Analytics />
+          {children}
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -15,12 +15,12 @@ import {
   Copy,
   Upload,
   Sparkles,
-  Image as ImageIcon,
+  ImageIcon,
   Check,
   Zap,
   ShieldCheck,
   Layers
-} from 'lucide-react';
+} from '../components/Icons';
 
 export default function LinkToQrcode({ lang, content, home }) {
   const toast = useToast();
@@ -61,7 +61,7 @@ export default function LinkToQrcode({ lang, content, home }) {
   const [fgColor, setFgColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#ffffff');
   const [errorLevel, setErrorLevel] = useState('H');
-  const [includeMargin, setIncludeMargin] = useState(true);
+  const [includeMargin, setIncludeMargin] = useState(false);
   const [logo, setLogo] = useState('');
   const [logoFile, setLogoFile] = useState(null);
   const [logoSize, setLogoSize] = useState(50);

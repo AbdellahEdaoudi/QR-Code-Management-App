@@ -1,6 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useCallback } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 
 const ToastContext = createContext(null);
 
@@ -10,15 +9,87 @@ export const useToast = () => {
     return context;
 };
 
+// Individual Toast component with enter/exit CSS animations
+function ToastItem({ toast: t, onRemove, icons }) {
+    const [isExiting, setIsExiting] = useState(false);
+    const timerRef = useRef(null);
+
+    useEffect(() => {
+        timerRef.current = setTimeout(() => {
+            setIsExiting(true);
+        }, 3700); // Start exit animation before removal
+        return () => clearTimeout(timerRef.current);
+    }, []);
+
+    useEffect(() => {
+        if (isExiting) {
+            const exitTimer = setTimeout(() => onRemove(t.id), 250);
+            return () => clearTimeout(exitTimer);
+        }
+    }, [isExiting, t.id, onRemove]);
+
+    const handleClose = () => {
+        clearTimeout(timerRef.current);
+        setIsExiting(true);
+    };
+
+    return (
+        <div
+            className={`pointer-events-auto transition-all duration-250 ease-out ${
+                isExiting
+                    ? 'opacity-0 scale-95 -translate-y-2'
+                    : 'opacity-100 scale-100 translate-y-0'
+            }`}
+            style={{ animation: isExiting ? undefined : 'toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}
+        >
+            <div className="relative group">
+                {/* Toast container */}
+                <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] rounded-xl py-3 pl-4 pr-5 flex items-center gap-4 min-w-[320px] max-w-md overflow-hidden hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors">
+
+                    {/* Status Indicator */}
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${t.type === 'success' ? 'bg-emerald-50 dark:bg-emerald-500/10' :
+                        t.type === 'error' ? 'bg-rose-50 dark:bg-rose-500/10' :
+                            t.type === 'warning' ? 'bg-amber-50 dark:bg-amber-500/10' :
+                                'bg-blue-50 dark:bg-blue-500/10'
+                        }`}>
+                        {icons[t.type]}
+                    </div>
+
+                    {/* Text Content */}
+                    <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-medium text-zinc-900 dark:text-zinc-100 leading-tight">
+                            {t.message}
+                        </p>
+                    </div>
+
+                    {/* Close Icon (Visible on Hover) */}
+                    <button
+                        onClick={handleClose}
+                        className="shrink-0 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 opacity-0 group-hover:opacity-100 transition-all p-1"
+                    >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    {/* Subtle Accent Line */}
+                    <div className={`absolute left-0 top-0 bottom-0 w-0.5 ${t.type === 'success' ? 'bg-emerald-500' :
+                        t.type === 'error' ? 'bg-rose-500' :
+                            t.type === 'warning' ? 'bg-amber-500' :
+                                'bg-blue-500'
+                        }`} />
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export function ToastProvider({ children }) {
     const [toasts, setToasts] = useState([]);
 
     const addToast = useCallback((message, type = 'success') => {
         const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
         setToasts((prev) => [...prev, { id, message, type }]);
-        setTimeout(() => {
-            setToasts((prev) => prev.filter((t) => t.id !== id));
-        }, 4000);
     }, []);
 
     const removeToast = useCallback((id) => {
@@ -59,68 +130,14 @@ export function ToastProvider({ children }) {
         <ToastContext.Provider value={toast}>
             {children}
             <div className="fixed top-6 right-6 z-100 flex flex-col items-end gap-3 pointer-events-none">
-                <AnimatePresence mode="popLayout" initial={false}>
-                    {toasts.map((t, index) => (
-                        <motion.div
-                            key={t.id}
-                            layout
-                            initial={{ opacity: 0, y: -20, scale: 0.8 }}
-                            animate={{
-                                opacity: 1,
-                                y: 0,
-                                scale: 1,
-                                zIndex: toasts.length - index
-                            }}
-                            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
-                            transition={{
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 25,
-                                mass: 0.8
-                            }}
-                            className="pointer-events-auto"
-                        >
-                            <div className="relative group">
-                                {/* Thin, elegant border container */}
-                                <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] rounded-xl py-3 pl-4 pr-5 flex items-center gap-4 min-w-[320px] max-w-md overflow-hidden hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors">
-
-                                    {/* Status Indicator */}
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${t.type === 'success' ? 'bg-emerald-50 dark:bg-emerald-500/10' :
-                                        t.type === 'error' ? 'bg-rose-50 dark:bg-rose-500/10' :
-                                            t.type === 'warning' ? 'bg-amber-50 dark:bg-amber-500/10' :
-                                                'bg-blue-50 dark:bg-blue-500/10'
-                                        }`}>
-                                        {icons[t.type]}
-                                    </div>
-
-                                    {/* Text Content */}
-                                    <div className="flex-1 min-w-0">
-                                        <p className="text-[13px] font-medium text-zinc-900 dark:text-zinc-100 leading-tight">
-                                            {t.message}
-                                        </p>
-                                    </div>
-
-                                    {/* Close Icon (Visible on Hover) */}
-                                    <button
-                                        onClick={() => removeToast(t.id)}
-                                        className="shrink-0 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 opacity-0 group-hover:opacity-100 transition-all p-1"
-                                    >
-                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-
-                                    {/* Subtle Accent Line */}
-                                    <div className={`absolute left-0 top-0 bottom-0 w-0.5 ${t.type === 'success' ? 'bg-emerald-500' :
-                                        t.type === 'error' ? 'bg-rose-500' :
-                                            t.type === 'warning' ? 'bg-amber-500' :
-                                                'bg-blue-500'
-                                        }`} />
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
+                {toasts.map((t) => (
+                    <ToastItem
+                        key={t.id}
+                        toast={t}
+                        onRemove={removeToast}
+                        icons={icons}
+                    />
+                ))}
             </div>
         </ToastContext.Provider>
     );

@@ -12,7 +12,7 @@ import {
   AlertCircle,
   Sparkles,
   Clipboard,
-} from 'lucide-react';
+} from '../components/Icons';
 import { useToast } from '../components/toast'
 
 export default function ReadQrCode({ lang, content }) {

@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { QrCode, Scan, FileSearch, Globe, Menu, X, Sparkles } from 'lucide-react';
+import { QrCode, Scan, FileSearch, Globe, Menu, X, Sparkles } from '../components/Icons';
 import CustomSelect from '../components/CustomSelect';
+import ThemeToggle from '../components/ThemeToggle';
 
 function Header({ content, lang }) {
   const router = useRouter();
@@ -104,8 +105,11 @@ function Header({ content, lang }) {
             </Link>
           </nav>
 
-          {/* Right Section: Language Switcher & Mobile Toggle */}
-          <div className="flex items-center gap-3">
+          {/* Right Section: Theme Toggle, Language Switcher & Mobile Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {/* Language Selector */}
             <div className="relative flex items-center">
               <CustomSelect

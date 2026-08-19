@@ -13,7 +13,7 @@ import {
   RefreshCw,
   Volume2,
   VolumeX,
-} from 'lucide-react';
+} from '../components/Icons';
 import { getTranslation } from '../translations/content/index';
 import { useToast } from '../components/toast';
 

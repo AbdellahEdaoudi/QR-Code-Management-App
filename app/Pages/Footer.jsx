@@ -6,7 +6,7 @@ import {
   Sparkles, 
   FileSearch, 
   Scan,
-} from 'lucide-react';
+} from '../components/Icons';
 
 function Footer({ content, lang }) {
   const currentLang = lang || 'en';
